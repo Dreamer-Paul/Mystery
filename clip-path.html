@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-hans">
+<head>
+    <meta charset="UTF-8">
+    <title>Clip Path Test</title>
+    <style>
+        section{
+            width: 600px;
+            height: 600px;
+        }
+        .test1{
+            background: #3498db;
+            clip-path: polygon(0 0, 0 80%, 50% 100%, 100% 80%, 100% 0);
+        }
+        .test2{
+            background: #3adb76;
+            clip-path: polygon(0 0, 50% 100%, 100% 0);
+            -webkit-clip-path: polygon(0 0, 50% 100%, 100% 0);
+        }
+    </style>
+</head>
+<body>
+<section class="test1">
+    <p>保罗保罗保罗保罗保罗保罗保罗保罗</p>
+</section>
+<section class="test2">
+    <p>奇趣奇趣奇趣奇趣奇趣奇趣奇趣奇趣</p>
+</section>
+</body>
+</html>

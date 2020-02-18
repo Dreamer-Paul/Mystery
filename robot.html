@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-hans">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS 绘制机器人图形</title>
+    <style>
+        .binkic-robot{
+            font-size: 30px;
+        }
+        .robot-head, .robot-body{
+            margin: auto;
+        }
+        .robot-head{
+            width: 4em;
+            height: 3em;
+            position: relative;
+            text-align: center;
+            border: 2px solid #555;
+            border-radius: 66% 66% 30% 30%;
+            box-shadow: -2px -4px rgba(0, 0, 0, .1) inset;
+        }
+        .robot-face{
+            left: .5em;
+            right: .5em;
+            bottom: .5em;
+            height: 1.5em;
+            background: #333;
+            position: absolute;
+            border-radius: .8em .8em .5em .5em;
+            box-shadow: 2px 4px rgba(255, 255, 255, .2) inset;
+        }
+        .robot-face:before, .robot-face:after{
+            bottom: .25em;
+            content: '';
+            width: .5em;
+            height: .75em;
+            position: absolute;
+            border-radius: 66%;
+            background: #00f4f5;
+            animation: eyes 1s .5s both infinite alternate;
+        }
+        .robot-face:before{
+            left: .75em;
+        }
+        .robot-face:after{
+            right: .75em;
+        }
+        .robot-body{
+            width: 3em;
+            height: 3.5em;
+            background: #fff;
+            position: relative;
+            border: 2px solid #555;
+            border-radius: 1em 1em 60% 60%;
+            box-shadow: -2px -4px rgba(0, 0, 0, .1) inset;
+        }
+
+        .robot-belly{
+            top: .5em;
+            left: .5em;
+            right: .5em;
+            height: 2.25em;
+            background: #fff;
+            text-align: center;
+            position: absolute;
+            border: 2px solid #555;
+            border-radius: 1em 1em 66% 66%;
+            box-shadow: -2px -4px rgba(0, 0, 0, .1) inset;
+        }
+        .dreamer-paul{
+            font-size: .5em;
+            content: "奇趣保罗原创作品";
+        }
+        .robot-shoulder{
+            top: 0;
+            width: 1em;
+            height: 2.5em;
+            background: #fff;
+            position: absolute;
+            border-radius: 66%;
+            border: 2px solid #555;
+            transform-origin: top;
+            box-shadow: -2px -4px rgba(0, 0, 0, .1) inset;
+        }
+        .robot-shoulder.left{
+            left: 0;
+            transform: rotate(50deg);
+            /*border-radius: 66% 30% 66% 66%;*/
+            animation: robot-shoulder-left 1s both infinite alternate;
+        }
+        .robot-shoulder.right{
+            right: 0;
+            z-index: -1;
+            transform: rotate(-50deg);
+            /*border-radius: 30% 66% 66% 66%;*/
+            animation: robot-shoulder-right 1.5s .5s both infinite alternate ease;
+        }
+
+        .robot-shoulder .style{
+            left: .5em;
+            bottom: 0;
+            width: .1em;
+            height: 1em;
+            position: absolute;
+            background: #00f4f5;
+            transform: rotate(10deg);
+            transform-origin: bottom;
+        }
+
+        .robot-shoulder.right .style{
+            transform: rotate(-10deg);
+        }
+
+        .robot-foot{
+            z-index: -1;
+            top: 3em;
+            width: 1.75em;
+            height: 1em;
+            background: #fff;
+            position: absolute;
+            transform-origin: top;
+            border: 2px solid #555;
+            box-shadow: -2px -4px rgba(0, 0, 0, .1) inset;
+        }
+        .robot-foot.left{
+            left: -.5em;
+            border-radius: 70% 20% 20% 20%;
+        }
+        .robot-foot.right{
+            right: -.5em;
+            border-radius: 20% 70% 20% 20%;
+        }
+
+        @keyframes robot-shoulder-left{
+            from{
+                transform: rotate(60deg);
+            }
+            to{
+                transform: rotate(20deg);
+            }
+        }
+        @keyframes robot-shoulder-right{
+            from{
+                transform: rotate(-60deg);
+            }
+            to{
+                transform: rotate(-20deg);
+            }
+        }
+        @keyframes eyes{
+            from{
+                transform: scaleY(1);
+            }
+            to{
+                transform: scaleY(0);
+            }
+        }
+
+        .binkic-out{
+            width: 1em;
+            height: 1em;
+            margin: .5em auto;
+            position: relative;
+            background: #00dcdd;
+            border-radius: 0 100px 100px 100px;
+        }
+        .binkic-inner{
+            width: .6em;
+            height: .6em;
+            background: #fff;
+            position: absolute;
+            top: calc(50% - .3em);
+            left: calc(50% - .3em);
+            border-radius: 66% 66% 0 66%;
+        }
+        .binkic-round{
+            width: .25em;
+            height: .25em;
+            position: absolute;
+            background: #00dcdd;
+            border-radius: 100%;
+            top: calc(50% - .12em);
+            left: calc(50% - .12em);
+        }
+    </style>
+</head>
+<body>
+<div class="binkic-robot">
+    <div class="robot-head">
+        <div class="robot-face"></div>
+    </div>
+    <div class="robot-body">
+        <div class="robot-belly">
+            <div class="binkic-out">
+                <div class="binkic-inner">
+                    <div class="binkic-round"></div>
+                </div>
+            </div>
+        </div>
+        <div class="robot-shoulder left">
+            <div class="style"></div>
+        </div>
+        <div class="robot-shoulder right">
+            <div class="style"></div>
+        </div>
+        <div class="robot-foot left"></div>
+        <div class="robot-foot right"></div>
+    </div>
+</div>
+</body>
+</html>
