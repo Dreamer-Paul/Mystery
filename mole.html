@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-hans">
+<head>
+    <meta charset="UTF-8">
+    <title>Mole</title>
+    <style>
+        .mole-head{
+            width: 10em;
+            height: 10em;
+            overflow: hidden;
+            background: #3498db;
+            border-radius: 66%;
+            position: relative;
+            border: 2px solid #222;
+        }
+        .mole-eye .left, .mole-eye .right{
+            top: 2.5em;
+
+            width: 1.5em;
+            height: 2em;
+            background: #333;
+            position: absolute;
+            border-radius: 66%;
+        }
+        .mole-eye .left:before, .mole-eye .right:before{
+            top: .25em;
+            left: .25em;
+            content: '';
+            width: .5em;
+            height: .75em;
+            display: block;
+            background: #fff;
+            position: relative;
+            border-radius: 66%;
+        }
+        .mole-eye .left{
+            left: 2.5em;
+        }
+        .mole-eye .right{
+            right: 2.5em;
+        }
+
+        .mole-nose{
+            top: 4.5em;
+            left: 3.5em;
+            width: 3em;
+            height: 3em;
+            z-index: 1;
+            position: absolute;
+            border-radius: 66%;
+            background: #f43800;
+        }
+        .mole-nose:before{
+            top: .5em;
+            left: .5em;
+            width: .75em;
+            height: 1em;
+            content: '';
+            display: block;
+            border-radius: 66%;
+            position: absolute;
+            transform: rotate(30deg);
+            background: rgba(255, 255, 255, .5);
+        }
+        .mole-bottom{
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 3em;
+            position: absolute;
+            background: #ffd99c;
+        }
+        .mole-bottom:before, .mole-bottom:after{
+            top: -1.5em;
+            content: '';
+            width: 4em;
+            height: 4em;
+            border-radius: 66%;
+            position: absolute;
+            background: #ffd99c;
+        }
+        .mole-bottom:before{ left: 0 }
+        .mole-bottom:after{ right: 0 }
+
+        .mole-mouth{
+            left: 3.75em;
+            width: 2.5em;
+            height: 2em;
+            bottom: 1em;
+            position: absolute;
+            border-radius: 66%;
+            transform: rotate(-20deg) translateX(1em);
+            border-bottom: 3px solid #222;
+        }
+    </style>
+</head>
+<body>
+<div class="mole-body">
+    <div class="mole-head">
+        <div class="mole-eye">
+            <div class="left"></div>
+            <div class="right"></div>
+        </div>
+        <div class="mole-nose"></div>
+        <div class="mole-bottom"></div>
+        <div class="mole-mouth"></div>
+    </div>
+</div>
+</body>
+</html>

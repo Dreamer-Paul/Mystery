@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>批量下载</title>
+</head>
+<body>
+<input id="url_start" type="url" placeholder="地址前："/>
+<input id="url_end" type="url" placeholder="地址后："/>
+<input id="num_start" type="text" min="0" placeholder="开始的数字"/>
+<input id="num_end" type="text" min="0" placeholder="结束的数字"/>
+<button class="btn">启动下载！</button>
+<script>
+    var btn = document.getElementsByClassName("btn")[0];
+    var url_s = document.getElementById("url_start");
+    var url_e = document.getElementById("url_end");
+    var num_s = document.getElementById("num_start");
+    var num_e = document.getElementById("num_end");
+
+    btn.addEventListener("click", function () {
+        create();
+    });
+
+    function create(){
+        var link = document.createElement("a");
+        for(var i = num_s.value; i <= num_e.value; i++){
+            link.href = url_s.value + i + url_e.value;
+            link.download = true;
+            link.click();
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-hans">
+<head>
+    <meta charset="UTF-8">
+    <title>随机动漫音乐播放器</title>
+    <style>
+        body{
+            background: #fafafa;
+        }
+        acgp{
+            top: 2em;
+            right: 0;
+            width: 16em;
+            display: block;
+            position: fixed;
+            background: #fff;
+            transition: transform .3s;
+            transform: translateX(12em);
+            box-shadow: 0 0 5px rgba(0, 0, 0, .1), 0 5px 10px rgba(0, 0, 0, .1);
+        }
+        acgp:hover{
+            transform: translateX(10em);
+        }
+        acgp.active, acgp.active:hover{
+            transform: translateX(0);
+        }
+
+        .acgp-cover{
+            width: 4em;
+            height: 4em;
+            float: left;
+            cursor: pointer;
+            margin-right: 1em;
+            display: inline-block;
+            vertical-align: middle;
+            background-size: contain;
+            transition: background .3s;
+        }
+        .acgp-info{
+            float: left;
+            width: 9em;
+            line-height: 1;
+            padding: .75em 0;
+        }
+        .acgp-title, .acgp-artist{
+            margin: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            padding-bottom: .5em;
+            text-overflow: ellipsis;
+        }
+        .acgp-artist{
+            color: #666;
+            font-size: .8em;
+        }
+        .acgp-controls{
+            float: right;
+        }
+        .acgp-controls .acgp-toggle, .acgp-controls .acgp-next, .acgp-controls .acgp-loop, .acgp-controls .acgp-volume{
+            width: 1em;
+            height: 1em;
+            cursor: pointer;
+        }
+        .acgp-toggle{ background: #ffb03a }
+        .acgp-next{ background: #da68ff }
+        .acgp-loop{ background: #00f4f5 }
+        .acgp-volume{ background: #37f557 }
+
+        .acgp-bar{
+            left: 4em;
+            right: 1em;
+            bottom: 0;
+            height: 2px;
+            position: absolute;
+        }
+        .acgp-bar .loaded, .acgp-bar .played{
+            top: 0;
+            height: 2px;
+            max-width: 100%;
+            position: absolute;
+        }
+        .acgp-bar .played{ background: #ff6359 }
+    </style>
+</head>
+<body>
+<acgp id="acgp-test"></acgp>
+
+<script>
+    function acgp(container){
+        var that = this;
+        var next = {
+            cover: fast_create("img")
+        };
+
+        // 快速创建对象
+        function fast_create(obj, set) {
+            var n = document.createElement(obj);
+
+            if(set && set.cls){
+                n.className = set.cls;
+            }
+            if(set && set.text){
+                n.innerText = set.text;
+            }
+            if(set && set.title){
+                n.title = set.title;
+            }
+
+            return n;
+        }
+
+        // 快捷批量添加
+        function fast_append(obj, child){
+            for(var i = 0; i < child.length; i++){
+                obj.appendChild(child[i]);
+            }
+        }
+
+        // 所有对象
+        var obj = {
+            container: container,
+            wrapper: {
+                info: fast_create("div", {cls: "acgp-info"}),
+                controls: fast_create("div", {cls: "acgp-controls"})
+            },
+            bar: {
+                wrap: fast_create("div", {cls: "acgp-bar"}),
+                loaded: fast_create("div", {cls: "loaded"}),
+                played: fast_create("div", {cls: "played"})
+
+            },
+            toggle: fast_create("div", {cls: "acgp-toggle", title: "播放|暂停"}),
+            next: fast_create("div", {cls: "acgp-next", title: "切歌"}),
+            loop: fast_create("div", {cls: "acgp-loop", titie: "切换循环"}),
+            vol: fast_create("div", {cls: "acgp-volume", title: "调整音量"}),
+            cover: fast_create("div", {cls: "acgp-cover"}),
+            title: fast_create("div", {cls: "acgp-title", text: "歌名"}),
+            artist: fast_create("span", {cls: "acgp-artist", text: "作曲家"}),
+            player: fast_create("audio")
+        };
+        obj.cover.style.backgroundImage = "url('https://p1.music.126.net/FYTSMZg7Jpu0HpmQXes7ew==/2299078813703135.jpg?param=250y250')";
+
+        fast_append(obj.wrapper.info, [obj.title, obj.artist]);
+        fast_append(obj.bar.wrap, [obj.bar.played]);
+        fast_append(obj.wrapper.controls, [obj.toggle, obj.next, obj.loop, obj.vol]);
+        fast_append(container, [obj.cover, obj.wrapper.info, obj.bar.wrap, obj.wrapper.controls, obj.player]);
+
+        // 播放与暂停
+        this.toggle = function () {
+            obj.player.paused ? obj.player.play() : obj.player.pause();
+        };
+
+        function ajax() {
+            var request = new XMLHttpRequest();
+            request.open("GET", "https://api.paugram.com/acgm/");
+            //request.setRequestHeader("Access-Control-Request-Headers", "x-paul-is-good");
+            //request.setRequestHeader("x-paul-is-good","XMLHttpRequest");
+            //request.setRequestHeader("X-Requested-With","XMLHttpRequest");
+            request.send();
+            request.onreadystatechange = function () {
+                if(request.readyState === 4){
+                    if(request.status === 200){
+                        var res = JSON.parse(request.response);
+                        next.title = res.title;
+                        next.artist = res.artist;
+                        next.cover.src = res.cover;
+                        next.link = res.link;
+                    }
+                    else{
+                        console.error("歌曲加载失败，错误码：" + request.status);
+                    }
+                }
+            };
+        }
+        ajax();
+
+        // 切歌
+        this.next = function () {
+            obj.title.innerText = next.title;
+            obj.artist.innerText = next.artist;
+            obj.cover.style.backgroundImage = "url('" + next.cover.src + "')";
+            obj.bar.played.style.width = "0%";
+            obj.player.src = next.link;
+            obj.player.play();
+            ajax();
+        };
+
+        var intv = setInterval(function () {
+            obj.bar.played.style.width = (obj.player.currentTime / obj.player.duration) * 100 + "%";
+        }, 500);
+
+        obj.player.addEventListener("ended", function () {
+            that.next();
+            console.log("结束|下一首");
+        });
+
+        obj.toggle.onclick = function () {
+            if(!obj.player.src){
+                that.next();
+            }
+            else{
+                that.toggle();
+            }
+        };
+        obj.next.addEventListener("click", function () {
+            that.next();
+            console.log("按钮|下一首");
+        });
+
+        obj.vol.onclick = function () {
+            switch (obj.player.volume){
+                case 1: obj.player.volume = 0.75;  break;
+                case 0.75: obj.player.volume = 0.50;  break;
+                case 0.50: obj.player.volume = 0.25;  break;
+                case 0.25: obj.player.volume = 1;  break;
+            }
+        };
+
+        obj.loop.onclick = function () {
+            obj.player.loop ? obj.player.loop = false : obj.player.loop = true;
+        };
+
+        obj.cover.addEventListener("click", function () {
+            container.classList.toggle("active");
+        });
+
+        console.log("%c ACGP %c Build 0.1 ","color: #fff; margin: 1em 0; padding: 5px 0; background: #3498db;","margin: 1em 0; padding: 5px 0; background: #efefef;");
+    }
+
+    var player = new acgp(document.getElementById("acgp-test"));
+</script>
+
+</body>
+</html>
