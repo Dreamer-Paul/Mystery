@@ -41,9 +41,10 @@ body:before{
 }
 
 .image-room{
-    display: flex;
+    /*display: flex;
     flex-wrap: nowrap;
-    flex-direction: row;
+    flex-direction: row;*/
+    white-space: nowrap;
     transition: transform .75s;
 }
 .image-room img{
