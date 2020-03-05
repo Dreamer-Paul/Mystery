@@ -13,6 +13,7 @@ body{
 
 img{
     max-width: 100%;
+    vertical-align: middle;
 }
 
 .slider{
@@ -40,7 +41,7 @@ body:before{
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(23, 98, 196, 0.226);
+    background: rgba(0, 0, 0, .2);
 }
 
 
@@ -49,7 +50,14 @@ body:before{
 }
 .slider-btn img{ cursor: pointer }
 
-.slider-image{ position: relative }
+.slider-image{
+    position: relative;
+    margin-bottom: 2em;
+}
+
+.slider-image, .slider-btn{
+    box-shadow: 0 0 1em rgba(0, 0, 0, .2);
+}
 
 
 .slider-action{
@@ -65,4 +73,17 @@ body:before{
     padding: .75em 1em;
     display: block;
     text-decoration: none;
+}
+
+
+@media screen and (max-width: 600px){
+    .slider-image img{
+        min-height: 17em;
+        object-fit: cover;
+    }
+
+    .slider-btn img{
+        min-height: 4em;
+        object-fit: cover;
+    }
 }
