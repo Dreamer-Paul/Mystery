@@ -42,7 +42,7 @@ items.forEach((item, value) => {
     let newBtn = document.createElement("span");
     newBtn.innerHTML = `<img src="static/${item.img}"/>`;
     newBtn.onmouseover = () => {
-        obj.btn.href = item.url;
+        obj.url.href = item.url;
         obj.room.style.transform = `translateX(-${(value) * 100}%)`;
         obj.bg.style.backgroundImage = "url(static/" + item.img + ")";
     }

@@ -41,9 +41,6 @@ body:before{
 }
 
 .image-room{
-    /*display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;*/
     white-space: nowrap;
     transition: transform .75s;
 }
@@ -51,7 +48,10 @@ body:before{
     width: 100%;
 }
 
-.slider-btn{ display: flex }
+.slider-btn{
+    display: flex;
+    max-height: 5em;
+}
 .slider-btn img{ cursor: pointer }
 
 .slider-image{
